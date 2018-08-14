@@ -21,9 +21,9 @@ namespace TestProject3.Controllers
 
         // GET: api/Room
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Room> Get()
         {
-            var rooms =
+            var rooms = Repo.GetRoomtable();
 
             return rooms;
         }
