@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TestProject3.Repository
+namespace TestProject3.Repo.Repository
 {
     public class Repository
     {
