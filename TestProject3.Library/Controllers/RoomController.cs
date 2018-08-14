@@ -11,12 +11,20 @@ namespace TestProject3.Controllers
     [ApiController]
     public class RoomController : ControllerBase
     {
+        public Repository Repo { get; set; }
+
+        public RoomController(Repository repository)
+        {
+            Repo = repo;
+        }
 
         // GET: api/Room
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            var rooms =
+
+            return rooms;
         }
 
         // GET: api/Room/5
