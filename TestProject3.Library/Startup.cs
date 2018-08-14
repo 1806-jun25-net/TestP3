@@ -30,12 +30,12 @@ namespace TestProject3.Library
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<PizzaPalacedbContext>(options =>
-    options.UseSqlServer(Configuration.GetConnectionString("PizzaPalacedb")));
+            options.UseSqlServer(Configuration.GetConnectionString("PizzaPalacedb")));
 
             services.AddScoped<Repository>();
-            services.AddCors();
+           // services.AddCors();
 
-            services.AddAuthentication();
+           // services.AddAuthentication();
 
             services.AddMvc()
     .AddXmlSerializerFormatters()
