@@ -29,10 +29,17 @@ namespace TestProject3.Library
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddEntityFrameworkNpgsql().AddDbContext<PizzaPalacedbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("PizzaPalacedb")));
+            services.AddDbContext<PizzaPalacedbContext>(options =>
+    options.UseSqlServer(Configuration.GetConnectionString("PizzaPalacedb")));
 
             services.AddScoped<Repository>();
+            services.AddCors();
+
+            services.AddAuthentication();
+
+            services.AddMvc()
+    .AddXmlSerializerFormatters()
+    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +53,14 @@ namespace TestProject3.Library
             {
                 app.UseHsts();
             }
+
+            app.UseAuthentication();
+
+            app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin() // could put just angular url here
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
             app.UseMvc();
