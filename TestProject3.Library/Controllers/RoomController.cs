@@ -8,7 +8,7 @@ using TestProject3.Repo.Repository;
 
 namespace TestProject3.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class RoomController : ControllerBase
     {
@@ -20,10 +20,13 @@ namespace TestProject3.Controllers
         }
 
         // GET: api/Room
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //}
+        [HttpGet]
+        public IEnumerable<Room> Get()
+        {
+            var rooms = Repo.GetRoomtable();
+
+            return rooms;
+        }
 
         // GET: api/Room/5
         [HttpGet("{id}", Name = "Get")]
