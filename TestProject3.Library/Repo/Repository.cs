@@ -19,6 +19,12 @@ namespace TestProject3.Repo.Repository
             return user;
         }
 
+        public IEnumerable<Users> GetError()
+        {
+            List<Users> user = _db.Users.Where(x => x.Name == "Raul").ToList();
+            return user;
+        }
+
         public IEnumerable<Room> GetRoomtable()
         {
             List<Room> room = _db.Room.ToList();

@@ -26,6 +26,13 @@ namespace TestProject3.Controllers
             var User = Repo.GetUsertable();
             return User;
         }
+
+        [HttpGet]
+        public IEnumerable<Users> GetError()
+        {
+                var User = Repo.GetError();
+                return User;
+        }
         
     }
 }
