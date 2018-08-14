@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TestProject3.Repo.Repository;
 
 namespace TestProject3.Library
 {
@@ -26,6 +28,11 @@ namespace TestProject3.Library
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddEntityFrameworkNpgsql().AddDbContext<PizzaPalacedbContext>(options =>
+            options.UseNpgsql(Configuration.GetConnectionString("PizzaPalacedb")));
+
+            services.AddScoped<Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
