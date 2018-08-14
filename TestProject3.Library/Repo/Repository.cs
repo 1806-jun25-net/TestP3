@@ -17,7 +17,6 @@ namespace TestProject3.Repo.Repository
         {
             List<Users> user = _db.Users.ToList();
             return user;
-
         }
 
         public IEnumerable<Room> GetRoomtable()
