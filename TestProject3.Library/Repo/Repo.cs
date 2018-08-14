@@ -20,5 +20,14 @@ namespace TestProject3.Repo
             return user;
 
         }
+
+        public IEnumerable<Room> GetRoomtable()
+        {
+            List<Room> room = _db.Room.ToList();
+            return room;
+        }
+
+
+
     }
 }
