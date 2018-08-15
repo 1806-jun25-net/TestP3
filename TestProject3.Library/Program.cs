@@ -30,9 +30,7 @@ namespace TestProject3.Library
         const int numberOfMessages = 10;
         queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
 
-        //Console.WriteLine("======================================================");
-        //Console.WriteLine("Press ENTER key to exit after receiving all the messages.");
-        //Console.WriteLine("======================================================");
+
 
         // Send Messages
         await SendMessagesAsync(numberOfMessages);
@@ -53,7 +51,6 @@ namespace TestProject3.Library
                 var message = new Message(Encoding.UTF8.GetBytes(messageBody));
 
                 // Write the body of the message to the console
-                //Console.WriteLine($"Sending message: {messageBody}");
 
                 // Send the message to the queue
                 await queueClient.SendAsync(message);
@@ -61,7 +58,6 @@ namespace TestProject3.Library
         }
         catch (Exception exception)
         {
-            //Console.WriteLine($"{DateTime.Now} :: Exception: {exception.Message}");
         }
     }
 }
