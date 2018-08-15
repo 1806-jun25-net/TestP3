@@ -25,10 +25,14 @@ namespace TestProject3.Library
 
     static void Main(string[] args)
     {
-        MainAsync().GetAwaiter().GetResult();
+         CreateWebHostBuilder(args).Build().Run();
     }
 
-    static async Task MainAsync()
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+    WebHost.CreateDefaultBuilder(args)
+        .UseStartup<Startup>();
+
+        static async Task MainAsync()
     {
         const int numberOfMessages = 1;
         queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
