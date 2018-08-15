@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TestProject3.Repo.Repository;
-using Microsoft.ServiceBus;
 using Microsoft.Extensions.Logging;
-using Microsoft.ServiceBus.Messaging;
 
 namespace TestProject3.Controllers
 {
@@ -19,21 +17,21 @@ namespace TestProject3.Controllers
         }
 
         // GET: api/User
-        [HttpGet]
-        public int GetUsertable()
-        {
-            var connectionString = "Endpoint = sb://project3-messagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=5yYCWYA76BT9QPA7/pnWBYXcqgG6X/ZCDQi43dE93cs=";
-            var queuename = "messenger1";
-            int b = 1;
-            var client = QueueClient.CreateFromConnectionString(connectionString, queuename);
+        //[HttpGet]
+        //public string GetUsertable()
+        //{
+        //    var connectionString = "Endpoint = sb://project3-messagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=5yYCWYA76BT9QPA7/pnWBYXcqgG6X/ZCDQi43dE93cs=";
+        //    var queuename = "messenger1";
+        //    string b = "hola";
+        //    var client = QueueClient.CreateFromConnectionString(connectionString, queuename);
 
-            client.OnMessage(message =>
-            b = message.GetBody<int>()
+        //    client.OnMessage(message =>
+        //    b = message.GetBody<string>()
 
-            );
-            //var User = Repo.GetUsertable();
-            return b;
-        }
+        //    );
+        //    //var User = Repo.GetUsertable();
+        //    return b;
+        //}
 
         [HttpGet]
         public IEnumerable<Users> GetError()
