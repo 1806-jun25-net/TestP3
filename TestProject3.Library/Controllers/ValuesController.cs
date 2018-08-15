@@ -24,7 +24,7 @@ namespace TestProject3.Library.Controllers
 
             var message = new BrokeredMessage(input);
             client.Send(message);
-            return new string[] { "value1" };
+            return new string[] { "Message sent" };
         }
 
         // GET api/values/5
