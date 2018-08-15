@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.ServiceBus.Messaging;
 
 namespace TestProject3.Library.Controllers
 {
@@ -14,7 +15,16 @@ namespace TestProject3.Library.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var connectionString = "Endpoint = sb://project3-messagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=5yYCWYA76BT9QPA7/pnWBYXcqgG6X/ZCDQi43dE93cs=";
+            var queuename = "messenger1";
+
+            var client = QueueClient.CreateFromConnectionString(connectionString, queuename);
+            int a = 1;
+            var input = (a);
+
+            var message = new BrokeredMessage(input);
+            client.Send(message);
+            return new string[] { "value1" };
         }
 
         // GET api/values/5

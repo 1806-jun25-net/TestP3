@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TestProject3.Repo.Repository;
+using Microsoft.ServiceBus;
+using Microsoft.Extensions.Logging;
+using Microsoft.ServiceBus.Messaging;
 
 namespace TestProject3.Controllers
 {
@@ -21,10 +20,19 @@ namespace TestProject3.Controllers
 
         // GET: api/User
         [HttpGet]
-        public IEnumerable<Users> GetUsertable()
+        public int GetUsertable()
         {
-            var User = Repo.GetUsertable();
-            return User;
+            var connectionString = "Endpoint = sb://project3-messagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=5yYCWYA76BT9QPA7/pnWBYXcqgG6X/ZCDQi43dE93cs=";
+            var queuename = "messenger1";
+            int b = 1;
+            var client = QueueClient.CreateFromConnectionString(connectionString, queuename);
+
+            client.OnMessage(message =>
+            b = message.GetBody<int>()
+
+            );
+            //var User = Repo.GetUsertable();
+            return b;
         }
 
         [HttpGet]
