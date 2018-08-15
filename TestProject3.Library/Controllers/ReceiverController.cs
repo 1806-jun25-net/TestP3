@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,16 +20,57 @@ namespace TestProject3.Controllers
         const string QueueName = "messenger1";
         static IQueueClient queueClient;
 
-        public ActionResult<string> Index(Message mes)
+        public async Task<ActionResult<string>> Index()
         {
+            string msg = await Send();
+           
+
+
+            //string messages = ($"Received message: SequenceNumber:{mes.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(mes.Body)}");
+
+
+            return msg;
+        }
+
+        public async Task<string> Send()
+        {
+
+
             //MainAsync().GetAwaiter().GetResult();
             queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
 
-            string messages = ($"Received message: SequenceNumber:{mes.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(mes.Body)}");
+
+            //queueClient.Receive();
+            string msg = "message";
 
 
-            return $"Receiving Messages: {messages}";
+            queueClient.RegisterMessageHandler(
+              async (message, token) =>
+              {
+
+                  // Process the message
+                  Debug.WriteLine("/n");
+                  Debug.WriteLine("/n");
+                  Debug.WriteLine("/n");
+                  Debug.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
+                  Debug.WriteLine("/n");
+                  Debug.WriteLine("/n");
+                  Debug.WriteLine("/n");
+                  msg = Encoding.UTF8.GetString(message.Body);
+                  // Complete the message so that it is not received again.
+                  // This can be done only if the queueClient is opened in ReceiveMode.PeekLock mode.
+                  await queueClient.CompleteAsync(message.SystemProperties.LockToken);
+              },
+              async (exceptionEvent) =>
+              {
+                  // Process the exception
+                  Debug.WriteLine("Exception = " + exceptionEvent.Exception);
+              });
+
+            return msg;
         }
+
+
 
         //static async Task MainAsync()
         //{
@@ -60,7 +102,7 @@ namespace TestProject3.Controllers
         //    // Process the message
         //    Console.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
         //    string messages = ($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
-            
+
         //    // Complete the message so that it is not received again.
         //    // This can be done only if the queueClient is created in ReceiveMode.PeekLock mode (which is default).
         //    await queueClient.CompleteAsync(message.SystemProperties.LockToken);
