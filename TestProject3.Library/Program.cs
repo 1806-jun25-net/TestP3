@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.ServiceBus;
 using System.Text;
+using System.Threading;
 
 namespace TestProject3.Library
 {
@@ -16,7 +17,9 @@ namespace TestProject3.Library
         {
  // Connection String for the namespace can be obtained from the Azure portal under the 
  // 'Shared Access policies' section.
-    const string ServiceBusConnectionString = "Endpoint = sb://project3-messagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=5yYCWYA76BT9QPA7/pnWBYXcqgG6X/ZCDQi43dE93cs=";
+
+
+        const string ServiceBusConnectionString = "Endpoint=sb://project3-messagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=5yYCWYA76BT9QPA7/pnWBYXcqgG6X/ZCDQi43dE93cs=";
         const string QueueName = "messenger1";
         static IQueueClient queueClient;
 
@@ -29,8 +32,6 @@ namespace TestProject3.Library
     {
         const int numberOfMessages = 10;
         queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
-
-
 
         // Send Messages
         await SendMessagesAsync(numberOfMessages);
