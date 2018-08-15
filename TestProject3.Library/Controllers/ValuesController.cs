@@ -14,59 +14,57 @@ namespace TestProject3.Library.Controllers
     public class ValuesController : ControllerBase
     {
 
-        const string connectionString = "Endpoint = sb://project3-messagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=5yYCWYA76BT9QPA7/pnWBYXcqgG6X/ZCDQi43dE93cs=";
-        const string queuename = "messenger1";
-        static IQueueClient queueClient;
+        //const string connectionString = "Endpoint = sb://project3-messagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=5yYCWYA76BT9QPA7/pnWBYXcqgG6X/ZCDQi43dE93cs=";
+        //const string queuename = "messenger1";
+        //static IQueueClient queueClient;
 
-        // GET api/values
-        [HttpGet]
-        public async Task Get()
-        {
+        //// GET api/values
+        //[HttpGet]
+        //public async Task Get()
+        //{
 
-            const int numberOfMessages = 10;
+        //    const int numberOfMessages = 1;
 
 
-            queueClient = new QueueClient(connectionString, queuename);
-            string a = "hi";
+        //    queueClient = new QueueClient(connectionString, queuename);
+        //    string a = "hi";
 
-            /// send message 
-            await SendMessagesAsync(numberOfMessages);
+        //    /// send message 
+        //    await SendMessagesAsync(numberOfMessages);
 
-            await queueClient.CloseAsync();
+        //    await queueClient.CloseAsync();
             
-        }
+        //}
 
-        static async Task SendMessagesAsync(int numberOfMessagesToSend)
-        {
-            try
-            {
-                for (var i = 0; i < numberOfMessagesToSend; i++)
-                {
-                    // Create a new message to send to the queue.
-                    string messageBody = $"Message {i}";
-                    var message = new Message(Encoding.UTF8.GetBytes(messageBody));
+        //static async Task SendMessagesAsync(int numberOfMessagesToSend)
+        //{
+        //    try
+        //    {
+        //        for (var i = 0; i < numberOfMessagesToSend; i++)
+        //        {
+        //            // Create a new message to send to the queue.
+        //            string messageBody = $"Message {i}";
+        //            var message = new Message(Encoding.UTF8.GetBytes(messageBody));
 
-                    // Write the body of the message to the console.
-                   // Console.WriteLine($"Sending message: {messageBody}");
 
-                    // Send the message to the queue.
-                    await queueClient.SendAsync(message);
-                }
-            }
-            catch (Exception exception)
-            {
-                //Console.WriteLine($"{DateTime.Now} :: Exception: {exception.Message}");
-            }
+        //            // Send the message to the queue.
+        //            await queueClient.SendAsync(message);
+        //        }
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        //Console.WriteLine($"{DateTime.Now} :: Exception: {exception.Message}");
+        //    }
 
             
-        }
+        //}
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
+        //// GET api/values/5
+        //[HttpGet("{id}")]
+        //public ActionResult<string> Get(int id)
+        //{
+        //    return "value";
+        //}
 
         // POST api/values
         [HttpPost]

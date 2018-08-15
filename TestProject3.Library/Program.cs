@@ -30,7 +30,7 @@ namespace TestProject3.Library
 
     static async Task MainAsync()
     {
-        const int numberOfMessages = 10;
+        const int numberOfMessages = 1;
         queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
 
         // Send Messages
@@ -51,7 +51,7 @@ namespace TestProject3.Library
                 string messageBody = $"Message {i}";
                 var message = new Message(Encoding.UTF8.GetBytes(messageBody));
 
-                // Write the body of the message to the console
+                
 
                 // Send the message to the queue
                 await queueClient.SendAsync(message);
