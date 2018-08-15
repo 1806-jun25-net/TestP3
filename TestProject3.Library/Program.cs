@@ -16,9 +16,9 @@ namespace TestProject3.Library
         {
  // Connection String for the namespace can be obtained from the Azure portal under the 
  // 'Shared Access policies' section.
-    const string ServiceBusConnectionString = "<your_connection_string>";
-    const string QueueName = "<your_queue_name>";
-    static IQueueClient queueClient;
+    const string ServiceBusConnectionString = "Endpoint = sb://project3-messagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=5yYCWYA76BT9QPA7/pnWBYXcqgG6X/ZCDQi43dE93cs=";
+        const string QueueName = "messenger1";
+        static IQueueClient queueClient;
 
     static void Main(string[] args)
     {
