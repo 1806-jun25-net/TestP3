@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
 using TestProject3.Repo.Repository;
+//using Microsoft.ServiceBus.Messaging;
 
 namespace TestProject3.Controllers
 {
@@ -52,7 +53,7 @@ namespace TestProject3.Controllers
             {
                 var myuser = Repo.GetUserById(1);
 
-                BrokeredMessage usermsg = new BorkeredMessage(myuser);
+                Message usermsg = new Message(myuser);
 
                 await queueClient.SendAsync(usermsg);
 
