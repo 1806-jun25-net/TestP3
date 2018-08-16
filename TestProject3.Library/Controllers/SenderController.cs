@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
+using TestProject3.Repo.Repository;
 
 namespace TestProject3.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class SenderController : ControllerBase
@@ -16,6 +18,12 @@ namespace TestProject3.Controllers
         const string ServiceBusConnectionString = "Endpoint=sb://project3-messagebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=5yYCWYA76BT9QPA7/pnWBYXcqgG6X/ZCDQi43dE93cs=";
         const string QueueName = "messenger1";
         static IQueueClient queueClient;
+        public Repository Repo { get; set; }
+
+        public SenderController(Repository repo)
+        {
+            Repo = repo;
+        }
 
         public ActionResult<string> Index()
         {
@@ -25,7 +33,7 @@ namespace TestProject3.Controllers
         }
 
 
-        static async Task Sender()
+         async Task Sender()
         {
             const int numberOfMessages = 1;
             queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
@@ -38,21 +46,28 @@ namespace TestProject3.Controllers
             await queueClient.CloseAsync();
         }
 
-        static async Task SendMessagesAsync(int numberOfMessagesToSend)
+         async Task SendMessagesAsync(int numberOfMessagesToSend)
         {
             try
             {
-                for (var i = 0; i < numberOfMessagesToSend; i++)
-                {
-                    // Create a new message to send to the queue
-                    string messageBody = $"Message {i}";
-                    var message = new Message(Encoding.UTF8.GetBytes(messageBody));
+                var myuser = Repo.GetUserById(1);
+
+                BrokeredMessage usermsg = new BorkeredMessage(myuser);
+
+                await queueClient.SendAsync(usermsg);
+
+
+                //for (var i = 0; i < numberOfMessagesToSend; i++)
+                //{
+                //    // Create a new message to send to the queue
+                //    string messageBody = $"Message {i}";
+                //    var message = new Message(Encoding.UTF8.GetBytes(messageBody));
 
 
 
-                    // Send the message to the queue
-                    await queueClient.SendAsync(message);
-                }
+                //    // Send the message to the queue
+                //    await queueClient.SendAsync(message);
+                //}
             }
             catch (Exception exception)
             {

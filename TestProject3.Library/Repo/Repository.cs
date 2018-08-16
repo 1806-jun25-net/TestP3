@@ -30,5 +30,11 @@ namespace TestProject3.Repo.Repository
             List<Room> room = _db.Room.ToList();
             return room;
         }
+        public Users GetUserById(int id)
+        {
+            var user = _db.Users.FirstOrDefault(g => g.Userid == id);
+            return user;
+
+        }
     }
 }
