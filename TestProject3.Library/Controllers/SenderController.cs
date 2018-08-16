@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
+using Microsoft.ServiceBus.Messaging;
 
 namespace TestProject3.Controllers
 {
@@ -28,7 +29,7 @@ namespace TestProject3.Controllers
         static async Task Sender()
         {
             const int numberOfMessages = 1;
-            queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
+            queueClient = new Microsoft.Azure.ServiceBus.QueueClient(ServiceBusConnectionString, QueueName);
 
             // Send Messages
             await SendMessagesAsync(numberOfMessages);
@@ -47,7 +48,7 @@ namespace TestProject3.Controllers
                     // Create a new message to send to the queue
                     string messageBody = $"Message {i}";
                     var message = new Message(Encoding.UTF8.GetBytes(messageBody));
-
+                    BrokeredMessage brokeredMessage = new BrokeredMessage(messageBody);
 
 
                     // Send the message to the queue
