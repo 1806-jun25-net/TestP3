@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
+using Newtonsoft.Json;
 using TestProject3.Repo.Repository;
 //using Microsoft.ServiceBus.Messaging;
 
@@ -52,10 +56,15 @@ namespace TestProject3.Controllers
             try
             {
                 var myuser = Repo.GetUserById(1);
+                Debug.WriteLine("**************************** my user: " + myuser.Name + " email  " + myuser.Email);
 
-                Message usermsg = new Message(myuser);
+               var json = JsonConvert.SerializeObject(myuser);
+                //Debug.WriteLine("**************************** my userByte: " + myuserByte.ToString());
 
-                await queueClient.SendAsync(usermsg);
+               var message = new Message(Encoding.UTF8.GetBytes(json));
+               // Debug.WriteLine("**************************** my user byte msg: " + usermsg.ToString());
+
+               await queueClient.SendAsync(message); 
 
 
                 //for (var i = 0; i < numberOfMessagesToSend; i++)
@@ -74,6 +83,7 @@ namespace TestProject3.Controllers
             {
             }
         }
+       
 
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
-
+using Newtonsoft.Json;
 
 namespace TestProject3.Controllers
 {
@@ -48,15 +48,15 @@ namespace TestProject3.Controllers
               async (message, token) =>
               {
 
+                  var userobj =JsonConvert.DeserializeObject(Encoding.UTF8.GetString(message.Body));
                   // Process the message
+                 
                   Debug.WriteLine("/n");
+                  Debug.WriteLine("*********** user object : " + userobj);
+                 // Debug.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
                   Debug.WriteLine("/n");
-                  Debug.WriteLine("/n");
-                  Debug.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
-                  Debug.WriteLine("/n");
-                  Debug.WriteLine("/n");
-                  Debug.WriteLine("/n");
-                  msg = Encoding.UTF8.GetString(message.Body);
+              
+                 
                   // Complete the message so that it is not received again.
                   // This can be done only if the queueClient is opened in ReceiveMode.PeekLock mode.
                   await queueClient.CompleteAsync(message.SystemProperties.LockToken);
